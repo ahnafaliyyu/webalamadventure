@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Alam Adventure</title>
+    <link rel="stylesheet" href="css/admin-style.css">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                Alam Adventure
+            </div>
+            <ul class="sidebar-nav">
+                <li><a href="index.html" class="active">Dashboard</a></li>
+                <li><a href="produk.html">Produk</a></li>
+                <li><a href="transaksi.html">Transaksi</a></li>
+                <li class="logout"><a href="login.html">Logout</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <div class="main-header">
+                <h1>Dashboard</h1>
+            </div>
+
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>Total Penjualan</h3>
+                    <p class="value">Rp 15.750.000</p>
+                </div>
+                <div class="card">
+                    <h3>Jumlah Produk</h3>
+                    <p class="value">8</p>
+                </div>
+                <div class="card">
+                    <h3>Transaksi Bulan Ini</h3>
+                    <p class="value">12</p>
+                </div>
+                <div class="card">
+                    <h3>Pelanggan Baru</h3>
+                    <p class="value">5</p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>Transaksi Terbaru</h2>
+                <table class="content-table">
+                    <thead>
+                        <tr>
+                            <th>ID Transaksi</th>
+                            <th>Nama Pelanggan</th>
+                            <th>Total</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TRX-0012</td>
+                            <td>Budi Santoso</td>
+                            <td>Rp 450.000</td>
+                            <td>12 Nov 2025</td>
+                            <td>Selesai</td>
+                        </tr>
+                        <tr>
+                            <td>TRX-0011</td>
+                            <td>Ani Yudhoyono</td>
+                            <td>Rp 1.200.000</td>
+                            <td>11 Nov 2025</td>
+                            <td>Selesai</td>
+                        </tr>
+                        <tr>
+                            <td>TRX-0010</td>
+                            <td>Charlie</td>
+                            <td>Rp 250.000</td>
+                            <td>10 Nov 2025</td>
+                            <td>Dibatalkan</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
