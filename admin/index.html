@@ -43,6 +43,23 @@
                 </div>
             </div>
 
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <h3>Pendapatan Per Bulan</h3>
+                    <canvas id="revenueLineChart"></canvas>
+                </div>
+                <div class="charts-grid-side">
+                    <div class="chart-container">
+                        <h3>Transaksi 7 Hari Terakhir</h3>
+                        <canvas id="dailyBarChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Kategori Produk Populer</h3>
+                        <canvas id="categoryDoughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
             <div class="content-section">
                 <h2>Transaksi Terbaru</h2>
                 <table class="content-table">
@@ -82,5 +99,111 @@
             </div>
         </main>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Common Chart Options
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: '#2c4532' }
+                },
+                x: {
+                    ticks: { color: '#2c4532' }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: { color: '#2c4532' }
+                }
+            }
+        };
+
+        // 1. Line Chart - Monthly Revenue
+        const revenueCtx = document.getElementById('revenueLineChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                datasets: [{
+                    label: 'Pendapatan',
+                    data: [1250000, 1900000, 2100000, 1800000, 2500000, 3100000],
+                    backgroundColor: 'rgba(44, 69, 50, 0.1)',
+                    borderColor: '#2c4532',
+                    tension: 0.3,
+                    fill: true,
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    ...commonOptions.scales,
+                    y: {
+                        ...commonOptions.scales.y,
+                        ticks: {
+                            ...commonOptions.scales.y.ticks,
+                            callback: (value) => {
+                                if (value >= 1000000) {
+                                    return 'Rp ' + (value / 1000000).toLocaleString('id-ID', { maximumFractionDigits: 2 }) + 'jt';
+                                }
+                                return 'Rp ' + value.toLocaleString('id-ID');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // 2. Bar Chart - Daily Transactions
+        const dailyCtx = document.getElementById('dailyBarChart').getContext('2d');
+        new Chart(dailyCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'],
+                datasets: [{
+                    label: 'Jumlah Transaksi',
+                    data: [5, 8, 3, 6, 4, 7, 2],
+                    backgroundColor: '#f9d84a',
+                    borderColor: '#e8c438',
+                    borderWidth: 1
+                }]
+            },
+            options: commonOptions
+        });
+
+        // 3. Doughnut Chart - Product Categories
+        const categoryCtx = document.getElementById('categoryDoughnutChart').getContext('2d');
+        new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Tenda', 'Kompor', 'Lampu', 'Hammock', 'Lainnya'],
+                datasets: [{
+                    label: 'Penyewaan per Kategori',
+                    data: [45, 25, 15, 10, 5],
+                    backgroundColor: [
+                        '#2c4532',
+                        '#f9d84a',
+                        '#7a8f80',
+                        '#e8c438',
+                        '#a9b4ab'
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { color: '#2c4532' }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

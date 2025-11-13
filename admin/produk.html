@@ -22,7 +22,7 @@
         <main class="main-content">
             <div class="main-header">
                 <h1>Manajemen Produk</h1>
-                <a href="#" class="btn btn-primary">Tambah Produk Baru</a>
+                <a href="tambah_produk.html" class="btn btn-primary">Tambah Produk Baru</a>
             </div>
 
             <div class="content-section">
@@ -36,51 +36,99 @@
                             <th>Aksi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="product-table-body">
+                        <!-- Data produk akan dimuat di sini oleh JavaScript -->
                         <tr>
-                            <td>PROD-001</td>
-                            <td>Tenda Pro Kapasitas 4 Orang</td>
-                            <td>Rp 150.000</td>
-                            <td>5</td>
-                            <td>
-                                <a href="#" class="btn btn-edit">Edit</a>
-                                <a href="#" class="btn btn-delete">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>PROD-002</td>
-                            <td>Kompor Portable</td>
-                            <td>Rp 50.000</td>
-                            <td>10</td>
-                            <td>
-                                <a href="#" class="btn btn-edit">Edit</a>
-                                <a href="#" class="btn btn-delete">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>PROD-003</td>
-                            <td>Lampu Tenda LED</td>
-                            <td>Rp 25.000</td>
-                            <td>15</td>
-                            <td>
-                                <a href="#" class="btn btn-edit">Edit</a>
-                                <a href="#" class="btn btn-delete">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>PROD-004</td>
-                            <td>Hammock Single</td>
-                            <td>Rp 30.000</td>
-                            <td>8</td>
-                            <td>
-                                <a href="#" class="btn btn-edit">Edit</a>
-                                <a href="#" class="btn btn-delete">Hapus</a>
-                            </td>
+                            <td colspan="5" style="text-align: center;">Memuat data produk...</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </main>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tableBody = document.getElementById('product-table-body');
+            loadProducts(); // Panggil fungsi untuk memuat produk
+
+            function loadProducts() {
+                fetch('../api/get_products.php')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    tableBody.innerHTML = ''; // Kosongkan isi tabel
+                    if (result.success) {
+                        if (result.data.length > 0) {
+                            result.data.forEach(product => {
+                                const row = document.createElement('tr');
+                                
+                                // Format harga ke format Rupiah
+                                const price = new Intl.NumberFormat('id-ID', { 
+                                    style: 'currency', 
+                                    currency: 'IDR', 
+                                    minimumFractionDigits: 0 
+                                }).format(product.price_per_day);
+
+                                row.innerHTML = `
+                                    <td>${product.id}</td>
+                                    <td>${product.name}</td>
+                                    <td>${price}</td>
+                                    <td>${product.stock}</td>
+                                    <td>
+                                        <a href="edit_produk.html?id=${product.id}" class="btn btn-edit">Edit</a>
+                                        <button class="btn btn-delete" data-id="${product.id}">Hapus</button>
+                                    </td>
+                                `;
+                                tableBody.appendChild(row);
+                            });
+                        } else {
+                            tableBody.innerHTML = '<tr><td colspan="5" style="text-align: center;">Tidak ada data produk.</td></tr>';
+                        }
+                    } else {
+                        throw new Error(result.message || 'Gagal memuat data dari API.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                    tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center;">Terjadi kesalahan: ${error.message}</td></tr>`;
+                });
+            }
+
+            // Event listener untuk tombol hapus
+            tableBody.addEventListener('click', function(event) {
+                if (event.target.classList.contains('btn-delete')) {
+                    const button = event.target;
+                    const productId = button.dataset.id;
+                    
+                    if (confirm(`Apakah Anda yakin ingin menghapus produk dengan ID ${productId}?`)) {
+                        fetch('../api/delete_product.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ id: productId })
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            if (result.success) {
+                                alert(result.message);
+                                // Hapus baris dari tabel tanpa reload halaman
+                                button.closest('tr').remove();
+                            } else {
+                                alert(`Gagal menghapus: ${result.message}`);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Tidak dapat terhubung ke server.');
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

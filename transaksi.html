@@ -89,12 +89,46 @@
     </div>
 
     <div class="overlay" id="overlay">
+      <div class="modal" id="pesanModal">
+        <div class="modal-header">
+          <h2>Konfirmasi Pesanan</h2>
+          <button class="close-button" onclick="closeModal()">&times;</button>
         </div>
+        <div class="modal-body">
+          <div class="modal-product">
+            <img id="modalImg" src="" alt="Product Image">
+            <div>
+              <h3 id="modalName"></h3>
+              <p>Harga: Rp. <span id="modalHarga"></span>/hari</p>
+            </div>
+          </div>
+          <div class="modal-details">
+            <p>Durasi: <span id="modalDurasi"></span></p>
+            <p>Jumlah: <span id="modalJumlah"></span></p>
+            <p>Tanggal Pemesanan: <span id="modalTanggalPesan"></span></p>
+            <p>Tanggal Pengembalian: <span id="modalTanggalKembali"></span></p>
+          </div>
+          <div class="modal-total">
+            <p>Total Biaya: <span id="modalTotal"></span></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-secondary" onclick="cancelFromModal()">Batal</button>
+          <button class="btn-yellow" onclick="startPayment()">Lanjutkan Pembayaran</button>
+        </div>
+      </div>
+    </div>
 
     <div class="small-card" id="waitingCard" aria-hidden="true">
+        <div class="wait-animation">
+            <div class="wait-bar" id="waitBar"></div>
         </div>
+        <div class="wait-text">Menunggu pembayaran...</div>
+    </div>
     <div class="small-card success" id="successCard" aria-hidden="true">
-        </div>
+        <div class="success-icon">✓</div>
+        <div class="success-text">Pembayaran Berhasil!</div>
+    </div>
 
     <footer
       id="kontak"

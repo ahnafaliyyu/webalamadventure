@@ -251,3 +251,40 @@ body {
 .btn-delete:hover {
     background-color: #c0392b;
 }
+
+/* New styles for charts grid */
+.charts-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 2/3 width for main chart, 1/3 for side */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.charts-grid-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.chart-container {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+    border: 1px solid #e8e5d0;
+    height: 380px; /* Fixed height for charts */
+}
+
+.chart-container h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c4532;
+}
+
+@media (max-width: 1200px) {
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
