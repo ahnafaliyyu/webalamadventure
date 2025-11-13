@@ -154,7 +154,7 @@ body {
 
 .summary-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     margin-bottom: 30px;
 }
@@ -176,10 +176,12 @@ body {
 
 .card .value {
     font-family: 'Viga', sans-serif;
-    font-size: 36px;
+    font-size: 20px;
     font-weight: 700;
     color: #2c4532;
 }
+
+
 
 .content-table {
     width: 100%;
@@ -253,38 +255,43 @@ body {
 }
 
 /* New styles for charts grid */
+/* === Perbaikan Layout Chart: Semua Sebaris === */
 .charts-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* 2/3 width for main chart, 1/3 for side */
-    gap: 20px;
-    margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
+/* Hapus styling lama untuk .charts-grid-side — tidak dibutuhkan lagi */
 .charts-grid-side {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  display: contents; /* Menghilangkan wrapper, biarkan anak langsung jadi grid item */
 }
 
+/* Pastikan semua chart-container jadi grid item langsung */
 .chart-container {
-    background-color: #fff;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
-    border: 1px solid #e8e5d0;
-    height: 380px; /* Fixed height for charts */
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  border: 1px solid #e8e5d0;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
 }
 
 .chart-container h3 {
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #2c4532;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c4532;
 }
 
-@media (max-width: 1200px) {
-    .charts-grid {
-        grid-template-columns: 1fr;
-    }
+/* Responsif: di layar sangat sempit, biarkan tinggi menyesuaikan */
+@media (max-width: 768px) {
+  .chart-container {
+    height: auto;
+    min-height: 280px;
+  }
 }
