@@ -285,7 +285,7 @@
 .ketentuan-section {
   width: 100%;
   padding: 140px 128px;
-  background: #f9d84a;
+  background: rgba(245, 242, 223, 0.95);
   min-height: 100vh;
 }
 

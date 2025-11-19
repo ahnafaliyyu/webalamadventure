@@ -398,6 +398,39 @@
   background: #2c4532;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  position: relative; 
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/public/gambargunung.png') no-repeat center center;
+  background-size: cover;
+  z-index: -2; 
+  opacity: 0.4; 
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: -1;
+}
+
 /* Responsive Design */
 @media (max-width: 992px) {
   .category-filter {
