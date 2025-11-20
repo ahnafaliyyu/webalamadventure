@@ -9,14 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $input = json_decode(file_get_contents('php://input'), true);
 
 // Validasi input
-$id = $input['id'] ?? null;
-$name = $input['name'] ?? '';
-$description = $input['description'] ?? '';
-$price_per_day = $input['price_per_day'] ?? 0;
-$stock = $input['stock'] ?? 0;
-$image_url = $input['image_url'] ?? '';
+$name = trim($input['name'] ?? '');
+$description = trim($input['description'] ?? '');
+$price_per_day = $input['price_per_day'] ?? null;
+$stock = $input['stock'] ?? null;
+$image_url = trim($input['image_url'] ?? '');
 
-if (!$id || empty($name) || !is_numeric($price_per_day) || !is_numeric($stock)) {
+if ($name === '' || !is_numeric($price_per_day) || !is_numeric($stock)) {
     echo json_encode(['success' => false, 'message' => 'Data tidak lengkap atau tidak valid.']);
     exit();
 }
@@ -33,15 +32,14 @@ if ($conn->connect_error) {
     exit();
 }
 
-$stmt = $conn->prepare("UPDATE products SET name = ?, description = ?, price_per_day = ?, stock = ?, image_url = ? WHERE id = ?");
-$stmt->bind_param("ssdisi", $name, $description, $price_per_day, $stock, $image_url, $id);
+$stmt = $conn->prepare("INSERT INTO products (name, description, price_per_day, stock, image_url) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("ssdis", $name, $description, $price_per_day, $stock, $image_url);
 
 if ($stmt->execute()) {
-    echo json_encode(['success' => true, 'message' => 'Produk berhasil diperbarui.']);
+    echo json_encode(['success' => true, 'message' => 'Produk berhasil ditambahkan.']);
 } else {
-    echo json_encode(['success' => false, 'message' => 'Gagal memperbarui produk: ' . $stmt->error]);
+    echo json_encode(['success' => false, 'message' => 'Gagal menambah produk: ' . $stmt->error]);
 }
 
 $stmt->close();
 $conn->close();
-?>

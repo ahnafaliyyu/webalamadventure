@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+require_once __DIR__ . '/../middleware/auth_api.php';
 
 // Hanya izinkan metode POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {

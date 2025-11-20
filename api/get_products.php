@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+require_once __DIR__ . '/../middleware/auth_api.php';
 
 // Database connection details (replace with your actual credentials)
 $servername = "localhost";
